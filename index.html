@@ -21,10 +21,93 @@ section{padding:70px 20px;text-align:center}section:nth-of-type(even){background
 .count{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin:28px 0}.unit{min-width:72px;padding:15px 10px;background:#fffaf7;border:1px solid #e8d7cd}.unit b{display:block;font-size:27px;font-weight:400;color:var(--deep)}.unit small{font:10px Arial,sans-serif;letter-spacing:.1em;text-transform:uppercase;color:#8c7476}
 .details{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;max-width:600px;margin:28px auto}.detail{background:#fffaf7;border:1px solid #e4d2c5;padding:22px 12px}.symbol{font-size:24px;color:var(--rose)}.detail h3{font-weight:400;color:var(--deep);margin:10px 0}.detail p{font:12px/1.8 Arial,sans-serif;color:#7c686a;margin:0}.hint{font:11px/1.7 Arial,sans-serif;color:#8c7476;margin-top:15px}
 footer{background:var(--deep);color:#f8e9e4;text-align:center;padding:30px 14px;font-size:13px;line-height:1.8}.music{position:fixed;right:16px;bottom:16px;width:48px;height:48px;border-radius:50%;border:1px solid #d5b7a7;background:#fffaf6;color:var(--deep);font-size:20px;z-index:5;box-shadow:0 4px 18px #0001}.music[aria-pressed=true]{background:var(--rose);color:white}
+
+/* Animated envelope welcome screen */
+.envelope-screen{position:fixed;inset:0;z-index:1000;display:grid;place-items:center;overflow:hidden;padding:24px;background:radial-gradient(ellipse at 50% 20%,#fff8f2 0%,#f2dfe0 48%,#e8e6d9 100%);transition:opacity .85s ease,visibility .85s ease}
+.envelope-screen:before,.envelope-screen:after{content:"✿";position:absolute;color:#b86c78;opacity:.28;font-size:clamp(70px,15vw,150px);animation:float 7s ease-in-out infinite}
+.envelope-screen:before{top:5%;left:5%}.envelope-screen:after{right:4%;bottom:4%;animation-delay:-3s}
+.envelope-screen.opened{opacity:0;visibility:hidden;pointer-events:none}
+.envelope-wrap{position:relative;width:min(88vw,360px);text-align:center;animation:envelopeFloat 3.8s ease-in-out infinite}
+.envelope-title{font:11px Arial,sans-serif;letter-spacing:.3em;text-transform:uppercase;color:#85927c;margin-bottom:30px}
+.envelope-button{display:block;width:100%;padding:0;border:0;background:none;cursor:pointer;color:inherit;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+.envelope{position:relative;width:100%;aspect-ratio:1.48;background:#f7e9e0;box-shadow:0 22px 50px #713b4b26;isolation:isolate;perspective:900px}
+.envelope-back{position:absolute;inset:0;background:linear-gradient(135deg,#ead1ca,#f9eee7);border:1px solid #d8b6a9}
+.envelope-letter{position:absolute;left:9%;right:9%;top:10%;height:76%;background:#fffdf9;border:1px solid #dfcbbd;display:grid;place-items:center;color:#713b4b;transition:transform .95s cubic-bezier(.2,.8,.2,1);z-index:1}
+.envelope-letter span:first-child{font-size:32px;color:#b86c78}.envelope-letter span:last-child{font:10px Arial,sans-serif;letter-spacing:.18em;text-transform:uppercase;margin-top:8px}
+.envelope-front{position:absolute;inset:0;z-index:3;background:#f1ddd7;clip-path:polygon(0 0,50% 55%,100% 0,100% 100%,0 100%);border-bottom:1px solid #d8b6a9}
+.envelope-flap{position:absolute;inset:0 0 auto;height:62%;z-index:4;background:linear-gradient(160deg,#f8e9e1,#e9cfc9);clip-path:polygon(0 0,100% 0,50% 100%);transform-origin:top;transition:transform .8s cubic-bezier(.2,.7,.2,1);backface-visibility:hidden}
+.envelope-seal{position:absolute;z-index:5;left:50%;top:52%;transform:translate(-50%,-50%);width:48px;height:48px;border-radius:50%;display:grid;place-items:center;background:#b86c78;color:#fff7f0;font-size:25px;box-shadow:0 4px 10px #713b4b2b;transition:opacity .35s ease,transform .5s ease}
+.envelope-button:focus-visible{outline:3px solid #713b4b;outline-offset:8px;border-radius:8px}
+.envelope-button:hover .envelope-seal{transform:translate(-50%,-50%) scale(1.08)}
+.envelope-wrap.opening .envelope-flap{transform:rotateX(180deg);z-index:0}.envelope-wrap.opening .envelope-letter{transform:translateY(-48%);transition-delay:.28s}.envelope-wrap.opening .envelope-seal{opacity:0;transform:translate(-50%,-50%) scale(.6)}
+.envelope-hint{margin-top:28px;font:11px Arial,sans-serif;letter-spacing:.17em;text-transform:uppercase;color:#806d70;animation:hintPulse 2s ease-in-out infinite}.envelope-caption{font-size:clamp(28px,7vw,40px);font-weight:400;color:#713b4b;margin:0 0 12px}.envelope-subtitle{font:12px/1.8 Arial,sans-serif;color:#806d70;letter-spacing:.04em}
+@keyframes envelopeFloat{50%{transform:translateY(-9px)}}@keyframes hintPulse{50%{opacity:.5}}
+body.locked{overflow:hidden}
+@media(max-width:480px){.envelope-wrap{width:min(88vw,330px)}.envelope-title{margin-bottom:24px}}
+@media(prefers-reduced-motion:reduce){.envelope-wrap,.envelope-screen:before,.envelope-screen:after,.envelope-hint{animation:none!important}.envelope-screen,.envelope-flap,.envelope-letter{transition-duration:.01ms!important}}
+
 @media(max-width:480px){.names{gap:6px}.name{padding:18px 6px}.details{grid-template-columns:1fr}.card{padding:40px 18px}}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;scroll-behavior:auto!important}}
+
+/* Premium editorial finish: champagne gold, deep wine, embossed stationery */
+:root{--cream:#fbf6ef;--blush:#f0dfe0;--rose:#a85f70;--deep:#54283b;--sage:#77836f;--gold:#c3a36b;--ink:#3d3034}
+body{background:#fbf6ef}
+.cover{background:radial-gradient(ellipse at 12% 12%,#f2dfe1 0,transparent 42%),radial-gradient(ellipse at 90% 90%,#e4e7dc 0,transparent 38%),linear-gradient(135deg,#fffaf4,#f6eee7)}
+.card{background:linear-gradient(145deg,#fffdf9f5,#fffaf4f2);border:1px solid #c6a66d;outline:1px solid #c6a66d55;outline-offset:7px;box-shadow:0 28px 80px #54283b17,0 4px 14px #54283b0a}
+.card:before,.card:after{content:'✦';color:var(--gold);background:#fffaf6;font-size:18px}
+.eyebrow,.kicker{color:#9b7a4d;letter-spacing:.3em}
+h1{color:#54283b;text-shadow:0 1px #ffffff}
+.btn{background:linear-gradient(135deg,#6e354b,#4e2638);border:1px solid #c5a56a;box-shadow:0 7px 20px #54283b18;transition:transform .25s,box-shadow .25s}
+.btn:hover{transform:translateY(-2px);box-shadow:0 11px 25px #54283b25}.btn.alt{background:#fffaf4;color:#54283b;border-color:#c5a56a}
+section{background:#fbf6ef}section:nth-of-type(even){background:linear-gradient(135deg,#f6ebe7,#f4f0e8)}
+.name,.unit,.detail{background:linear-gradient(145deg,#fffdf9,#faf1e9);border-color:#d8c29a;box-shadow:0 8px 24px #54283b08}
+.name strong,.unit b{color:#54283b}.name span,.unit small{color:#9b7a4d}
+footer{background:linear-gradient(135deg,#54283b,#311b2a);border-top:2px solid #c5a56a}
+.music{border-color:#c5a56a;box-shadow:0 6px 22px #54283b20}
+/* Luxe invitation envelope */
+.envelope-screen{background:radial-gradient(ellipse at 50% 14%,#fffaf1 0%,#f4e6e0 43%,#e7e5d9 100%)}
+.envelope-screen:before,.envelope-screen:after{content:'✦  ❧';font-family:Georgia,serif;color:#b99a62;opacity:.42;font-size:clamp(54px,12vw,110px)}
+.envelope-wrap{width:min(88vw,390px);filter:drop-shadow(0 18px 24px #54283b12)}
+.envelope-title{color:#99784b;letter-spacing:.34em;margin-bottom:26px;font-size:10px}
+.envelope-caption{font-family:Georgia,'Times New Roman',serif;letter-spacing:.015em;font-size:clamp(34px,8vw,46px);color:#54283b;margin-bottom:10px}
+.envelope-subtitle{font-family:Georgia,serif;font-style:italic;font-size:14px;color:#80676a;letter-spacing:.02em;margin:0 0 30px}
+.envelope{aspect-ratio:1.48;border-radius:3px;background:#ead8c6;box-shadow:0 28px 55px #54283b28,0 0 0 1px #c5a56a;overflow:visible}
+.envelope:before{content:'';position:absolute;inset:7px;z-index:8;border:1px solid #c5a56a;pointer-events:none;opacity:.8}
+.envelope-back{background:linear-gradient(135deg,#f5e7d8 0%,#e6cdb9 45%,#f9eee1 100%);border:1px solid #c7a66b}
+.envelope-letter{left:8%;right:8%;top:8%;height:79%;background:linear-gradient(145deg,#fffdf7,#f8efe4);border:1px solid #d7bd8b;box-shadow:inset 0 0 0 4px #fffdf8,inset 0 0 0 5px #d8c19a;z-index:1}
+.envelope-letter:before,.envelope-letter:after{content:'✦';position:absolute;color:#b99a62;font-size:13px}.envelope-letter:before{top:10px;left:12px}.envelope-letter:after{bottom:10px;right:12px}
+.envelope-letter span:first-child{font-size:37px;color:#a85f70;text-shadow:0 2px 0 #ead5ca}
+.envelope-letter span:last-child{font:9px Arial,sans-serif;letter-spacing:.25em;color:#99784b}
+.envelope-front{background:linear-gradient(135deg,#e7c8bc,#f6e3d8 52%,#d9b8a8);clip-path:polygon(0 0,50% 56%,100% 0,100% 100%,0 100%);border-bottom:1px solid #c5a56a}
+.envelope-flap{background:linear-gradient(155deg,#f7e8dc 0%,#e6c8bb 75%);filter:drop-shadow(0 3px 2px #54283b0c)}
+.envelope-seal{width:58px;height:58px;border:2px solid #e8d4a5;outline:1px solid #a9864f;outline-offset:3px;background:radial-gradient(circle at 35% 28%,#c98791,#8d4359 72%);color:#fff7e8;font-size:27px;box-shadow:0 5px 15px #54283b38, inset 0 0 0 2px #ffffff20}
+.envelope-seal:after{content:' ';position:absolute;inset:6px;border:1px solid #ffffff66;border-radius:50%}
+.envelope-hint{color:#99784b;font-size:10px;letter-spacing:.23em;margin-top:28px}
+.envelope-button:hover .envelope{transform:translateY(-2px);transition:transform .3s ease}
+.envelope-button:active .envelope{transform:scale(.99)}
+.envelope-wrap.opening .envelope{animation:sealGlow .9s ease}
+@keyframes sealGlow{50%{filter:brightness(1.06) drop-shadow(0 0 18px #c5a56a88)}}
+@media(max-width:480px){.envelope-wrap{width:min(88vw,340px)}.envelope-subtitle{margin-bottom:26px}.envelope-seal{width:52px;height:52px}}
+
 </style></head>
-<body>
+<body class="locked">
+<div class="envelope-screen" id="envelopeScreen" aria-label="Engagement invitation envelope">
+  <div class="envelope-wrap" id="envelopeWrap">
+    <div class="envelope-title">AN EXCLUSIVE INVITATION</div>
+    <h1 class="envelope-caption">Shahrukh <span style="color:#b89c64;font-style:italic">&amp;</span> Tushi</h1>
+    <p class="envelope-subtitle">We have something beautiful to share</p>
+    <button class="envelope-button" id="envelopeOpen" aria-label="Open the engagement invitation">
+      <div class="envelope" aria-hidden="true">
+        <div class="envelope-back"></div>
+        <div class="envelope-letter"><div><span>♡</span><br><span>You're invited</span></div></div>
+        <div class="envelope-front"></div>
+        <div class="envelope-flap"></div>
+        <div class="envelope-seal">♡</div>
+      </div>
+    </button>
+    <div class="envelope-hint">TAP TO UNSEAL YOUR INVITATION</div>
+  </div>
+</div>
 <header class="cover" id="home">
 <div class="flower a">🌸</div><div class="flower b">🌿</div><div class="flower c">✿</div><div class="flower d">🌷</div>
 <main class="card">
@@ -32,22 +115,31 @@ footer{background:var(--deep);color:#f8e9e4;text-align:center;padding:30px 14px;
 <p class="lead">With love in our hearts and joy in our families,<br>please join us as we celebrate our engagement.</p>
 <h1>Shahrukh<br><span class="amp">&amp;</span><br>Tushi</h1>
 <div class="eyebrow">THE ENGAGEMENT CELEBRATION</div>
-<div class="date" id="heroDate">23 October 2026</div>
+<div class="date" id="heroDate">21 October 2026</div>
 <div class="place">ENGAGEMENT CELEBRATION</div>
 <div class="actions"><button class="btn" id="open">Open Invitation ↓</button><button class="btn alt" id="calendar">Add to Calendar</button></div>
 <p class="hint">Two hearts, one promise, a lovely new chapter.</p>
 </main></header>
 <section id="invitation"><div class="inner"><div class="kicker">Together with our families</div><h2>You're invited</h2><p class="copy">We are delighted to share a special milestone with the people who mean so much to us. Please join us for a joyful engagement celebration as we begin this exciting chapter together.</p>
 <div class="names"><div class="name"><span>THE GROOM</span><strong>Shahrukh</strong></div><div class="heart">♡</div><div class="name"><span>THE BRIDE</span><strong>Tushi</strong></div></div><p class="copy">Your presence, love, and blessings will make our day even more meaningful.</p></div></section>
-<section id="countdown"><div class="inner"><div class="kicker">The moment we're waiting for</div><h2>Counting down to our engagement</h2><div class="count"><div class="unit"><b id="days">—</b><small>Days</small></div><div class="unit"><b id="hours">—</b><small>Hours</small></div><div class="unit"><b id="minutes">—</b><small>Minutes</small></div><div class="unit"><b id="seconds">—</b><small>Seconds</small></div></div><p class="copy" id="countHint">23 October 2026 · Engagement celebration</p></div></section>
-<section id="details"><div class="inner"><div class="kicker">Join the celebration</div><h2>Engagement details</h2><div class="details"><div class="detail"><div class="symbol">♡</div><h3>Date &amp; Time</h3><p>23 October 2026<br>Time to be confirmed</p></div><div class="detail"><div class="symbol">⌖</div><h3>Location</h3><p>Open the map link below<br>Tap to see the venue</p></div></div><a class="btn" href="https://maps.app.goo.gl/FcuzwDv59WQjKNE86" target="_blank" rel="noopener">View Location</a><p class="hint">Date set to 23 October 2026. Event time can be edited in index.html.</p></div></section>
+<section id="countdown"><div class="inner"><div class="kicker">The moment we're waiting for</div><h2>Counting down to our engagement</h2><div class="count"><div class="unit"><b id="days">—</b><small>Days</small></div><div class="unit"><b id="hours">—</b><small>Hours</small></div><div class="unit"><b id="minutes">—</b><small>Minutes</small></div><div class="unit"><b id="seconds">—</b><small>Seconds</small></div></div><p class="copy" id="countHint">21 October 2026 · Engagement celebration</p></div></section>
+<section id="details"><div class="inner"><div class="kicker">Join the celebration</div><h2>Engagement details</h2><div class="details"><div class="detail"><div class="symbol">♡</div><h3>Date &amp; Time</h3><p>21 October 2026<br>Time to be confirmed</p></div><div class="detail"><div class="symbol">⌖</div><h3>Location</h3><p>Open the map link below<br>Tap to see the venue</p></div></div><a class="btn" href="https://maps.app.goo.gl/FcuzwDv59WQjKNE86" target="_blank" rel="noopener">View Location</a><p class="hint">Date set to 21 October 2026. Event time can be edited in index.html.</p></div></section>
 <section><div class="inner"><div class="kicker">With love</div><h2>One promise, many beautiful memories</h2><p class="copy">Thank you for being part of our journey. We can't wait to celebrate this special moment with you.</p><p style="font-size:22px;color:var(--rose);margin-top:24px">Shahrukh &amp; Tushi</p></div></section>
 <footer>MADE WITH LOVE · SHARUKH &amp; TUSHI<br><span style="opacity:.75">Engagement Celebration · Dhaka, Bangladesh</span></footer>
 <button class="music" id="musicToggle" aria-label="Toggle background music" aria-pressed="false" title="Toggle background music">♫</button>
 <audio id="music" loop preload="none"><source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_783a1a6c5f.mp3?filename=acoustic-guitar-110624.mp3" type="audio/mpeg"></audio>
 <script>
-/* Engagement date set to 23 October 2026 at 6:00 PM Dhaka time. Edit the time if needed. */
-const engagementDate = new Date('2026-10-23T18:00:00+06:00');
+/* Open the animated envelope before revealing the invitation */
+const envelopeScreen=document.getElementById('envelopeScreen');
+const envelopeWrap=document.getElementById('envelopeWrap');
+document.getElementById('envelopeOpen').addEventListener('click',()=>{
+ envelopeWrap.classList.add('opening');
+ window.setTimeout(()=>{envelopeScreen.classList.add('opened');document.body.classList.remove('locked');},1050);
+ window.setTimeout(()=>{envelopeScreen.remove();},2050);
+});
+
+/* Engagement date set to 21 October 2026 at 6:00 PM Dhaka time. Edit the time if needed. */
+const engagementDate = new Date('2026-10-21T18:00:00+06:00');
 const dateText = document.getElementById('heroDate');
 const countHint = document.getElementById('countHint');
 if (engagementDate instanceof Date && !isNaN(engagementDate)) {
