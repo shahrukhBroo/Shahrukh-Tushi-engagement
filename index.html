@@ -132,7 +132,14 @@ footer{background:linear-gradient(135deg,#54283b,#311b2a);border-top:2px solid #
 /* Open the animated envelope before revealing the invitation */
 const envelopeScreen=document.getElementById('envelopeScreen');
 const envelopeWrap=document.getElementById('envelopeWrap');
+const audio=document.getElementById('music'),btn=document.getElementById('musicToggle');
+async function startMusic(){
+ try { audio.muted=false; await audio.play(); btn.setAttribute('aria-pressed','true'); }
+ catch(e) { /* Audible autoplay can be blocked by browser policy. */ }
+}
+window.addEventListener('DOMContentLoaded',()=>{ startMusic(); });
 document.getElementById('envelopeOpen').addEventListener('click',()=>{
+ startMusic();
  envelopeWrap.classList.add('opening');
  window.setTimeout(()=>{envelopeScreen.classList.add('opened');document.body.classList.remove('locked');},1050);
  window.setTimeout(()=>{envelopeScreen.remove();},2050);
@@ -156,6 +163,5 @@ document.getElementById('calendar').addEventListener('click',()=>{
  const ics=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//Shahrukh and Tushi//Engagement Invitation//EN','BEGIN:VEVENT','UID:shahrukh-tushi-engagement@example.com','DTSTART;TZID=Asia/Dhaka:'+stamp,'DTEND;TZID=Asia/Dhaka:'+stamp,'SUMMARY:Engagement Celebration — Shahrukh & Tushi','LOCATION:Dhaka, Bangladesh','DESCRIPTION:Engagement invitation for Shahrukh and Tushi.','END:VEVENT','END:VCALENDAR'].join('\r\n');
  const url=URL.createObjectURL(new Blob([ics],{type:'text/calendar;charset=utf-8'}));const a=document.createElement('a');a.href=url;a.download='Shahrukh-and-Tushi-Engagement.ics';a.click();URL.revokeObjectURL(url);
 });
-const audio=document.getElementById('music'),btn=document.getElementById('musicToggle');
-btn.addEventListener('click',async()=>{if(audio.paused){try{await audio.play();btn.setAttribute('aria-pressed','true')}catch(e){alert('Music could not load. Check your internet connection and try again.')}}else{audio.pause();btn.setAttribute('aria-pressed','false')}});
+btn.addEventListener('click',async()=>{if(audio.paused){try{audio.muted=false;await audio.play();btn.setAttribute('aria-pressed','true')}catch(e){alert('Music could not load. Please check the music.mp3 file and try again.')}}else{audio.pause();btn.setAttribute('aria-pressed','false')}});
 </script></body></html>
