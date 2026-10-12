@@ -89,8 +89,59 @@ footer{background:linear-gradient(135deg,#54283b,#311b2a);border-top:2px solid #
 @keyframes sealGlow{50%{filter:brightness(1.06) drop-shadow(0 0 18px #c5a56a88)}}
 @media(max-width:480px){.envelope-wrap{width:min(88vw,340px)}.envelope-subtitle{margin-bottom:26px}.envelope-seal{width:52px;height:52px}}
 
+
+/* Deluxe invitation enhancements */
+:root{--ink:#39252f;--gold:#c7a76b}
+html{scroll-padding-top:24px}
+section{padding:clamp(72px,10vw,112px) 20px;position:relative}
+section:before{content:'✦';display:block;color:#c3a36b;font-size:17px;margin:0 auto 18px;opacity:.85}
+.inner{max-width:900px}
+.copy{max-width:690px}
+.luxe-rule{width:100px;height:1px;background:linear-gradient(90deg,transparent,#c3a36b,transparent);margin:24px auto}
+.details{max-width:780px;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+.detail{padding:30px 20px;position:relative;overflow:hidden}
+.detail:after{content:'✧';position:absolute;right:12px;top:8px;color:#c3a36b;font-size:20px;opacity:.6}
+.detail h3{font-size:22px}
+.detail p{font:14px/1.9 Arial,sans-serif}
+.schedule{max-width:700px;margin:34px auto 0;border-top:1px solid #d8c29a;border-bottom:1px solid #d8c29a;padding:26px 14px;display:grid;grid-template-columns:1fr 1fr;gap:22px}
+.schedule strong{display:block;font-size:19px;font-weight:400;color:#54283b;margin-bottom:8px}
+.schedule span{font:13px/1.8 Arial,sans-serif;color:#80676a}
+.attire{max-width:760px;margin:30px auto 0;display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.attire-card{background:linear-gradient(145deg,#fffdf9,#f7eee5);border:1px solid #d8c29a;padding:28px 18px;box-shadow:0 10px 30px #54283b08}
+.attire-icon{font-size:32px;margin-bottom:10px}
+.attire-card h3{font-size:22px;font-weight:400;color:#54283b;margin:8px 0 10px}
+.attire-card p{font:13px/1.9 Arial,sans-serif;color:#80676a;margin:0}
+.quote-card{max-width:760px;margin:30px auto 0;padding:30px 24px;border:1px solid #d8c29a;background:#fffaf4;box-shadow:inset 0 0 0 5px #fffaf4,inset 0 0 0 6px #eadbc0}
+.quote-card p{font-style:italic;font-size:clamp(20px,4vw,27px);line-height:1.6;color:#54283b;margin:0}
+.ornament{color:#b99a62;letter-spacing:.5em;margin:24px auto;font-size:14px}
+#countdown .unit{min-width:90px;padding:20px 12px}
+#countdown .unit b{font-size:clamp(28px,5vw,38px)}
+#countdown .unit small{text-transform:none;letter-spacing:.04em;font-size:12px}
+#heroDate{font-size:clamp(23px,5vw,30px);letter-spacing:.03em}
+.cover .card{max-width:760px;padding-top:clamp(42px,8vw,78px);padding-bottom:clamp(42px,8vw,78px)}
+.cover .lead{font-size:18px}
+footer{padding:42px 20px;font-size:14px}
+@media(max-width:520px){.details,.attire,.schedule{grid-template-columns:1fr}.schedule{gap:20px}.detail{padding:25px 16px}.attire-card{padding:24px 16px}}
+
+
+/* Smooth, natural scrolling: avoid snapping back on short touch gestures */
+html{scroll-snap-type:none;scroll-padding-top:0;scroll-behavior:smooth}
+body{scroll-behavior:smooth}
+.scroll-cue{position:absolute;left:50%;bottom:17px;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:4px;border:0;background:rgba(255,250,244,.84);color:#99784b;padding:8px 14px 7px;border:1px solid #c7a76b88;border-radius:999px;box-shadow:0 5px 18px #54283b0d;font:9px Arial,sans-serif;letter-spacing:.2em;cursor:pointer;z-index:4;white-space:nowrap;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);animation:cueFloat 2s ease-in-out infinite}
+.scroll-cue .cue-arrow{font:22px/1 Georgia,serif;color:#54283b;animation:cueArrow 1.5s ease-in-out infinite}
+.cover .scroll-cue{bottom:12px}
+section{padding-bottom:112px}
+@keyframes cueFloat{50%{box-shadow:0 8px 22px #54283b18}}
+@keyframes cueArrow{0%,100%{transform:translateY(0)}50%{transform:translateY(4px)}}
+.petal-rain{position:fixed;inset:0;z-index:2;pointer-events:none;overflow:hidden;opacity:.72}
+.petal{position:absolute;top:-12vh;left:var(--left);font-size:var(--size);opacity:0;filter:drop-shadow(0 2px 3px #8a586015);animation:petalFall var(--duration) linear var(--delay) infinite;will-change:transform,opacity}
+@keyframes petalFall{0%{transform:translate3d(0,-8vh,0) rotate(0deg);opacity:0}8%{opacity:var(--opacity)}50%{transform:translate3d(var(--drift),55vh,0) rotate(210deg)}92%{opacity:var(--opacity)}100%{transform:translate3d(calc(var(--drift) * -0.4),115vh,0) rotate(420deg);opacity:0}}
+section{scroll-margin-top:0}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.petal{animation:none!important;display:none}.scroll-cue,.scroll-cue .cue-arrow{animation:none!important}}
+
 </style></head>
 <body class="locked">
+<div class="petal-rain" id="petalRain" aria-hidden="true"></div>
 <div class="envelope-screen" id="envelopeScreen" aria-label="Engagement invitation envelope">
   <div class="envelope-wrap" id="envelopeWrap">
     <div class="envelope-title">AN EXCLUSIVE INVITATION</div>
@@ -116,16 +167,19 @@ footer{background:linear-gradient(135deg,#54283b,#311b2a);border-top:2px solid #
 <h1>Shahrukh<br><span class="amp">&amp;</span><br>Tushi</h1>
 <div class="eyebrow">THE ENGAGEMENT CELEBRATION</div>
 <div class="date" id="heroDate">21 October 2026</div>
+<div class="luxe-rule"></div>
+<div class="place">WEDNESDAY · 6:00 PM · DHAKA, BANGLADESH</div>
 <div class="place">ENGAGEMENT CELEBRATION</div>
 <div class="actions"><button class="btn" id="open">Open Invitation ↓</button><button class="btn alt" id="calendar">Add to Calendar</button></div>
 <p class="hint">Two hearts, one promise, a lovely new chapter.</p>
 </main></header>
 <section id="invitation"><div class="inner"><div class="kicker">Together with our families</div><h2>You're invited</h2><p class="copy">We are delighted to share a special milestone with the people who mean so much to us. Please join us for a joyful engagement celebration as we begin this exciting chapter together.</p>
 <div class="names"><div class="name"><span>THE GROOM</span><strong>Shahrukh</strong></div><div class="heart">♡</div><div class="name"><span>THE BRIDE</span><strong>Tushi</strong></div></div><p class="copy">Your presence, love, and blessings will make our day even more meaningful.</p></div></section>
-<section id="countdown"><div class="inner"><div class="kicker">The moment we're waiting for</div><h2>Counting down to our engagement</h2><div class="count"><div class="unit"><b id="days">—</b><small>Days</small></div><div class="unit"><b id="hours">—</b><small>Hours</small></div><div class="unit"><b id="minutes">—</b><small>Minutes</small></div><div class="unit"><b id="seconds">—</b><small>Seconds</small></div></div><p class="copy" id="countHint">21 October 2026 · Engagement celebration</p></div></section>
-<section id="details"><div class="inner"><div class="kicker">Join the celebration</div><h2>Engagement details</h2><div class="details"><div class="detail"><div class="symbol">♡</div><h3>Date &amp; Time</h3><p>21 October 2026<br>Time to be confirmed</p></div><div class="detail"><div class="symbol">⌖</div><h3>Location</h3><p>Open the map link below<br>Tap to see the venue</p></div></div><a class="btn" href="https://maps.app.goo.gl/FcuzwDv59WQjKNE86" target="_blank" rel="noopener">View Location</a><p class="hint">Date set to 21 October 2026. Event time can be edited in index.html.</p></div></section>
-<section><div class="inner"><div class="kicker">With love</div><h2>One promise, many beautiful memories</h2><p class="copy">Thank you for being part of our journey. We can't wait to celebrate this special moment with you.</p><p style="font-size:22px;color:var(--rose);margin-top:24px">Shahrukh &amp; Tushi</p></div></section>
-<footer>MADE WITH LOVE · SHARUKH &amp; TUSHI<br><span style="opacity:.75">Engagement Celebration · Dhaka, Bangladesh</span></footer>
+<section id="countdown"><div class="inner"><div class="kicker">The moment we're waiting for</div><h2>Counting Down to Our Engagement</h2><p class="copy" style="font-size:20px;color:var(--deep)">২১ অক্টোবর ২০২৬, রোজ বুধবার, সন্ধ্যা ৬টা থেকে অনুষ্ঠান আরম্ভ হবে।</p><div class="count"><div class="unit"><b id="days">—</b><small>Days</small></div><div class="unit"><b id="hours">—</b><small>Hours</small></div><div class="unit"><b id="minutes">—</b><small>Minutes</small></div><div class="unit"><b id="seconds">—</b><small>Seconds</small></div></div><p class="copy" id="countHint">আমাদের আনন্দের দিনে আপনার উপস্থিতি একান্ত কাম্য।</p></div></section>
+<section id="details"><div class="inner"><div class="kicker">The Celebration</div><h2>Engagement Details</h2><p class="copy">একটি নতুন পথচলার শুরুতে আপনাদের ভালোবাসা, দোয়া ও উপস্থিতি আমাদের আনন্দকে পূর্ণতা দেবে।</p><div class="details"><div class="detail"><div class="symbol">✧</div><h3>Date &amp; Time</h3><p>বুধবার, ২১ অক্টোবর ২০২৬<br>সন্ধ্যা ৬টা থেকে অনুষ্ঠান আরম্ভ হবে</p></div><div class="detail"><div class="symbol">⌖</div><h3>Venue &amp; Directions</h3><p>অনুষ্ঠানের লোকেশন দেখতে নিচের ম্যাপ বাটনে চাপ দিন।<br>আপনার যাত্রা সহজ হোক।</p></div></div><a class="btn" href="https://maps.app.goo.gl/FcuzwDv59WQjKNE86" target="_blank" rel="noopener">View Venue on Map ↗</a><div class="schedule"><div><strong>06:00 PM</strong><span>অনুষ্ঠান শুরু<br>Engagement Celebration</span></div><div><strong>With Love &amp; Blessings</strong><span>আপনাদের উপস্থিতিই আমাদের জন্য বিশেষ উপহার</span></div></div></div></section>
+<section id="dress-code"><div class="inner"><div class="kicker">A little style note</div><h2>Dress Code</h2><p class="copy">To make the evening feel beautifully coordinated, we invite our guests to dress in traditional elegance or smart festive style.</p><div class="attire"><div class="attire-card"><div class="attire-icon">✦</div><h3>Gentlemen</h3><p>Punjabi or a smart, elegant shirt<br><span style="color:#9b7a4d">Festive • Refined • Comfortable</span></p></div><div class="attire-card"><div class="attire-icon">❀</div><h3>Ladies</h3><p>Saree in your favourite festive style<br><span style="color:#9b7a4d">Graceful • Traditional • Elegant</span></p></div></div><p class="hint">Please feel comfortable and celebrate in your own style.</p></div></section>
+<section id="blessing"><div class="inner"><div class="kicker">A day made more special by you</div><h2>Your Presence Is Our Gift</h2><div class="quote-card"><p>“Two hearts, one promise, and a beautiful beginning — made even more meaningful with your love and blessings.”</p><div class="ornament">✦ ❧ ✦</div><p style="font-size:20px">শাহরুখ ও তুশির নতুন পথচলার জন্য আপনাদের দোয়া কামনা করছি।</p></div><p class="copy" style="margin-top:28px">We look forward to sharing this precious milestone with the people who matter most.</p><p style="font-size:clamp(25px,5vw,32px);color:var(--rose);margin-top:30px">Shahrukh <span style="color:var(--gold);font-style:italic">&amp;</span> Tushi</p><div class="ornament">WITH LOVE · ALWAYS</div></div></section>
+<footer>MADE WITH LOVE · SHAHRUKH &amp; TUSHI<br><span style="opacity:.75">Wednesday, 21 October 2026 · 6:00 PM · Dhaka, Bangladesh</span><br><span style="display:inline-block;margin-top:14px;letter-spacing:.12em;font-size:10px;opacity:.8">FOR ENQUIRIES</span><br><a href="tel:+8801730401853" style="display:inline-block;margin-top:5px;color:var(--gold);font-size:16px;font-weight:600;letter-spacing:.08em;text-decoration:none">+8801730401853</a></footer>
 <button class="music" id="musicToggle" aria-label="Toggle background music" aria-pressed="false" title="Toggle background music">♫</button>
 <audio id="music" loop preload="auto"><source src="music.mp3" type="audio/mpeg"></audio>
 <script>
@@ -138,6 +192,12 @@ async function startMusic(){
  catch(e) { /* Audible autoplay can be blocked by browser policy. */ }
 }
 window.addEventListener('DOMContentLoaded',()=>{ startMusic(); });
+// A restrained mix of drifting blossom petals adds motion without obscuring the invitation.
+const petalRain=document.getElementById('petalRain');
+if(petalRain && !window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+ const blossoms=['✿','❀','✾','🌸','✧'];
+ for(let i=0;i<22;i++){const el=document.createElement('span');el.className='petal';el.textContent=blossoms[i%blossoms.length];el.style.setProperty('--left',(Math.random()*100)+'%');el.style.setProperty('--size',(12+Math.random()*17)+'px');el.style.setProperty('--duration',(13+Math.random()*17)+'s');el.style.setProperty('--delay',(-Math.random()*28)+'s');el.style.setProperty('--drift',(-65+Math.random()*130)+'px');el.style.setProperty('--opacity',(0.25+Math.random()*0.38).toFixed(2));petalRain.appendChild(el);}
+}
 document.getElementById('envelopeOpen').addEventListener('click',()=>{
  startMusic();
  envelopeWrap.classList.add('opening');
@@ -151,10 +211,20 @@ const dateText = document.getElementById('heroDate');
 const countHint = document.getElementById('countHint');
 if (engagementDate instanceof Date && !isNaN(engagementDate)) {
  dateText.textContent = engagementDate.toLocaleDateString('en-GB',{day:'numeric',month:'long',year:'numeric'});
- countHint.textContent = 'We look forward to celebrating with you!';
+ countHint.textContent = '২১ তারিখ রোজ বুধবার সন্ধ্যা ছয়টা থেকে অনুষ্ঠান আরম্ভ হবে। আপনাদের উপস্থিতি একান্ত কাম্য।';
  function tick(){let d=engagementDate.getTime()-Date.now();let v=d<=0?[0,0,0,0]:[Math.floor(d/86400000),Math.floor(d%86400000/3600000),Math.floor(d%3600000/60000),Math.floor(d%60000/1000)];['days','hours','minutes','seconds'].forEach((id,i)=>document.getElementById(id).textContent=v[i]);}
  tick();setInterval(tick,1000);
 } else { ['days','hours','minutes','seconds'].forEach(id=>document.getElementById(id).textContent='—'); }
+// Elegant scroll cues show guests that more invitation details follow.
+const scrollPanels=[document.querySelector('header.cover'),...document.querySelectorAll('body>section')];
+scrollPanels.forEach((panel,index)=>{
+ const next=scrollPanels[index+1]; if(!next) return;
+ const cue=document.createElement('button'); cue.type='button'; cue.className='scroll-cue';
+ cue.setAttribute('aria-label','Scroll to the next invitation section');
+ cue.innerHTML='<span>SCROLL TO EXPLORE</span><span class="cue-arrow" aria-hidden="true">⌄</span>';
+ cue.addEventListener('click',()=>next.scrollIntoView({behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'}));
+ panel.appendChild(cue);
+});
 document.getElementById('open').addEventListener('click',()=>document.getElementById('invitation').scrollIntoView({behavior:'smooth'}));
 document.getElementById('calendar').addEventListener('click',()=>{
  if(!(engagementDate instanceof Date)||isNaN(engagementDate)){alert('Please add the confirmed engagement date in index.html first.');return;}
