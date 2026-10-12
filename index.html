@@ -39,7 +39,7 @@ footer{background:var(--deep);color:#f8e9e4;text-align:center;padding:30px 14px;
 .envelope-seal{position:absolute;z-index:5;left:50%;top:52%;transform:translate(-50%,-50%);width:48px;height:48px;border-radius:50%;display:grid;place-items:center;background:#b86c78;color:#fff7f0;font-size:25px;box-shadow:0 4px 10px #713b4b2b;transition:opacity .35s ease,transform .5s ease}
 .envelope-button:focus-visible{outline:3px solid #713b4b;outline-offset:8px;border-radius:8px}
 .envelope-button:hover .envelope-seal{transform:translate(-50%,-50%) scale(1.08)}
-.envelope-wrap.opening .envelope-flap{transform:rotateX(180deg);z-index:0}.envelope-wrap.opening .envelope-letter{transform:translateY(-48%);transition-delay:.28s}.envelope-wrap.opening .envelope-seal{opacity:0;transform:translate(-50%,-50%) scale(.6)}
+.envelope-wrap.opening .envelope-flap{transform:rotateX(180deg);z-index:0}.envelope-wrap.opening .envelope-letter{z-index:6;transform:translateY(-42%);transition-delay:.28s}.envelope-wrap.opening .envelope-seal{opacity:0;transform:translate(-50%,-50%) scale(.6)}
 .envelope-hint{margin-top:28px;font:11px Arial,sans-serif;letter-spacing:.17em;text-transform:uppercase;color:#806d70;animation:hintPulse 2s ease-in-out infinite}.envelope-caption{font-size:clamp(28px,7vw,40px);font-weight:400;color:#713b4b;margin:0 0 12px}.envelope-subtitle{font:12px/1.8 Arial,sans-serif;color:#806d70;letter-spacing:.04em}
 @keyframes envelopeFloat{50%{transform:translateY(-9px)}}@keyframes hintPulse{50%{opacity:.5}}
 body.locked{overflow:hidden}
@@ -82,7 +82,7 @@ footer{background:linear-gradient(135deg,#54283b,#311b2a);border-top:2px solid #
 .envelope-flap{background:linear-gradient(155deg,#f7e8dc 0%,#e6c8bb 75%);filter:drop-shadow(0 3px 2px #54283b0c)}
 .envelope-seal{width:58px;height:58px;border:2px solid #e8d4a5;outline:1px solid #a9864f;outline-offset:3px;background:radial-gradient(circle at 35% 28%,#c98791,#8d4359 72%);color:#fff7e8;font-size:27px;box-shadow:0 5px 15px #54283b38, inset 0 0 0 2px #ffffff20}
 .envelope-seal:after{content:' ';position:absolute;inset:6px;border:1px solid #ffffff66;border-radius:50%}
-.envelope-hint{color:#99784b;font-size:10px;letter-spacing:.23em;margin-top:28px}
+.envelope-hint{color:#99784b;font-size:10px;letter-spacing:.16em;margin-top:28px;display:flex;flex-direction:column;align-items:center;gap:8px;line-height:1.5}.envelope-hint .hint-english{font:600 11px Arial,sans-serif;letter-spacing:.24em}.envelope-hint .hint-bangla{font:13px/1.5 Arial,sans-serif;letter-spacing:0;color:#80676a}
 .envelope-button:hover .envelope{transform:translateY(-2px);transition:transform .3s ease}
 .envelope-button:active .envelope{transform:scale(.99)}
 .envelope-wrap.opening .envelope{animation:sealGlow .9s ease}
@@ -139,6 +139,116 @@ section{padding-bottom:112px}
 section{scroll-margin-top:0}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.petal{animation:none!important;display:none}.scroll-cue,.scroll-cue .cue-arrow{animation:none!important}}
 
+
+/* Final premium envelope polish — opaque, layered, and mobile-safe */
+.envelope-screen{
+ background:
+  radial-gradient(ellipse at 50% 10%,#fffaf0 0%,#f4e4dc 42%,#e7dfd2 100%);
+}
+.envelope-wrap{width:min(88vw,390px);filter:drop-shadow(0 20px 28px #45213124)}
+.envelope-title{margin-bottom:24px;color:#947344;letter-spacing:.32em}
+.envelope-button{border-radius:5px}
+.envelope{
+ position:relative;isolation:isolate;overflow:hidden;aspect-ratio:1.48;
+ border-radius:5px;
+ background:#ead5c3;
+ border:1px solid #c7a66b;
+ box-shadow:0 22px 42px #4521312e, inset 0 0 0 3px #fff6e7, inset 0 0 0 4px #c5a56a;
+ transition:transform .3s ease,box-shadow .3s ease;
+}
+.envelope:before{
+ content:"";position:absolute;inset:7px;z-index:8;pointer-events:none;
+ border:1px solid #c4a366;border-radius:2px;
+}
+.envelope:after{
+ content:"✦";position:absolute;z-index:9;left:50%;bottom:11px;
+ transform:translateX(-50%);font:12px Georgia,serif;color:#a8864e;
+ text-shadow:0 1px #fff7e9;pointer-events:none;
+}
+.envelope-back{
+ background:linear-gradient(135deg,#f5e7d8 0%,#e6c9b5 48%,#f7e9da 100%);
+ border:1px solid #c7a66b;
+}
+.envelope-letter{
+ left:8%;right:8%;top:7%;height:82%;
+ background:linear-gradient(145deg,#fffdf7 0%,#f8efe2 100%);
+ border:1px solid #d1b77f;
+ box-shadow:inset 0 0 0 4px #fffdf7,inset 0 0 0 5px #d8c19a,0 2px 8px #54283b10;
+}
+.envelope-front{
+ background:linear-gradient(135deg,#e4c1b4 0%,#f5e1d5 48%,#d7b3a3 100%);
+ clip-path:polygon(0 0,50% 56%,100% 0,100% 100%,0 100%);
+ border-bottom:1px solid #c5a56a;
+}
+.envelope-flap{
+ background:linear-gradient(155deg,#f8eadd 0%,#e8cabb 60%,#d9b5a6 100%);
+ filter:drop-shadow(0 4px 3px #54283b1a);
+}
+.envelope-seal{
+ width:58px;height:58px;border:2px solid #f2dfb3;
+ outline:1px solid #a9864f;outline-offset:3px;
+ background:radial-gradient(circle at 32% 25%,#d39a9e 0%,#a95f70 45%,#713247 100%);
+ box-shadow:0 6px 15px #45213140,inset 0 0 0 2px #ffffff2b;
+}
+.envelope-hint{
+ margin-top:24px;display:flex;flex-direction:column;align-items:center;gap:7px;
+ color:#8f7044;letter-spacing:0;text-transform:none;animation:hintPulse 2.2s ease-in-out infinite;
+}
+.hint-english{font:700 11px Arial,sans-serif;letter-spacing:.28em;text-transform:uppercase}
+.hint-bangla{font:14px/1.6 Arial,sans-serif;letter-spacing:.015em;color:#755b5e}
+.envelope-button:hover .envelope{transform:translateY(-3px);box-shadow:0 27px 48px #45213135,inset 0 0 0 3px #fff6e7,inset 0 0 0 4px #c5a56a}
+.envelope-button:active .envelope{transform:scale(.99)}
+.envelope-wrap.opening .envelope{animation:sealGlow .9s ease}
+@media(max-width:480px){
+ .envelope-wrap{width:min(88vw,340px)}
+ .envelope-hint{margin-top:22px}
+ .hint-bangla{font-size:13px}
+}
+@media(prefers-reduced-motion:reduce){.envelope-hint{animation:none!important}}
+
+
+/* Final envelope-paper reveal fix: lift the invitation card clearly above the envelope */
+.envelope{overflow:visible!important;isolation:isolate;}
+.envelope-letter{z-index:2!important;transform:translateY(0);will-change:transform;}
+.envelope-front{z-index:3!important;}
+.envelope-flap{z-index:4!important;}
+.envelope-wrap.opening .envelope-flap{transform:rotateX(180deg);z-index:1!important;}
+.envelope-wrap.opening .envelope-letter{z-index:10!important;transform:translateY(-82%)!important;transition:transform 1.05s cubic-bezier(.18,.75,.25,1) .18s!important;}
+.envelope-wrap.opening .envelope-front{z-index:3!important;}
+.envelope-wrap.opening .envelope-seal{z-index:5!important;opacity:0;transform:translate(-50%,-50%) scale(.6);}
+
+
+
+#open .open-arrow{display:inline-block;font-size:11px;line-height:1;vertical-align:2px;margin-left:3px;animation:guideBounce 1.25s ease-in-out infinite}
+/* Clear, elegant guidance for the main invitation button */
+.open-invitation-guide{display:flex;flex-direction:column;align-items:center;gap:5px;margin:24px auto 10px;color:#99784b;font:10px/1.6 Arial,sans-serif;letter-spacing:.16em;text-transform:uppercase}
+.open-invitation-guide .guide-arrow{font:25px/1 Georgia,serif;color:#c3a36b;animation:guideBounce 1.25s ease-in-out infinite}
+.open-invitation-guide .guide-bn{font:12px/1.7 Arial,sans-serif;letter-spacing:0;text-transform:none;color:#80676a}
+#open{position:relative;isolation:isolate;animation:openButtonPulse 2s ease-in-out infinite;box-shadow:0 0 0 3px #c7a76b28,0 8px 22px #54283b25}
+#open:after{content:'';position:absolute;inset:-5px;border:1px solid #c7a76b;border-radius:5px;pointer-events:none;animation:openButtonRing 2s ease-out infinite}
+#open:focus-visible{outline:3px solid #c7a76b;outline-offset:7px}
+@keyframes guideBounce{0%,100%{transform:translateY(0)}50%{transform:translateY(5px)}}
+@keyframes openButtonPulse{0%,100%{transform:translateY(0);box-shadow:0 0 0 3px #c7a76b28,0 8px 22px #54283b25}50%{transform:translateY(-2px);box-shadow:0 0 0 5px #c7a76b25,0 11px 27px #54283b32}}
+@keyframes openButtonRing{0%{transform:scale(1);opacity:.8}100%{transform:scale(1.08,1.25);opacity:0}}
+@media(prefers-reduced-motion:reduce){.open-invitation-guide .guide-arrow,#open,#open .open-arrow{animation:none!important}#open:after{animation:none!important}}
+/* Slightly lift the call-to-action on the first invitation page for better mobile framing. */
+.bismillah{font-family:Georgia,"Times New Roman",serif;font-size:clamp(20px,5vw,27px);line-height:1.7;letter-spacing:0;color:#99784b;margin:0 auto 22px;padding:0 4px;text-align:center;text-shadow:0 1px 0 #fff8e8}
+.cover .open-invitation-guide{margin-top:17px;margin-bottom:6px}
+.cover .open-invitation-guide,.cover .actions{position:relative;top:-26px}
+.cover .actions{margin-top:8px}
+.cover .hint{margin-top:4px}
+@media(max-width:480px){.bismillah{margin-bottom:16px;font-size:22px}.cover .open-invitation-guide{margin-top:13px}.cover .open-invitation-guide,.cover .actions{top:-34px}.cover .actions{margin-top:6px}}
+
+
+.btn#open{font-size:12px;padding:15px 22px;letter-spacing:.085em}
+#open{animation:openButtonPulseBetter 1.65s ease-in-out infinite}
+#open:after{inset:-6px;animation:openButtonRingBetter 1.8s ease-out infinite}
+#open .open-arrow{font-size:13px;animation:guideBounceBetter .8s ease-in-out infinite}
+@keyframes openButtonPulseBetter{0%,100%{transform:translateY(0) scale(1);box-shadow:0 0 0 3px #c7a76b30,0 8px 22px #54283b25}50%{transform:translateY(-3px) scale(1.015);box-shadow:0 0 0 6px #c7a76b20,0 13px 30px #54283b38}}
+@keyframes openButtonRingBetter{0%{transform:scale(1);opacity:.78}100%{transform:scale(1.1,1.3);opacity:0}}
+@keyframes guideBounceBetter{0%,100%{transform:translateY(0)}50%{transform:translateY(6px)}}
+@media(prefers-reduced-motion:reduce){#open{animation:none!important}#open:after,#open .open-arrow{animation:none!important}}
+
 </style></head>
 <body class="locked">
 <div class="petal-rain" id="petalRain" aria-hidden="true"></div>
@@ -156,12 +266,13 @@ section{scroll-margin-top:0}
         <div class="envelope-seal">♡</div>
       </div>
     </button>
-    <div class="envelope-hint">TAP TO UNSEAL YOUR INVITATION</div>
+    <div class="envelope-hint"><span class="hint-english">TAP TO OPEN</span><span class="hint-bangla" lang="bn">খুলতে ট্যাপ করুন</span></div>
   </div>
 </div>
 <header class="cover" id="home">
 <div class="flower a">🌸</div><div class="flower b">🌿</div><div class="flower c">✿</div><div class="flower d">🌷</div>
 <main class="card">
+<div class="bismillah" lang="ar" dir="rtl">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
 <div class="eyebrow">A beautiful beginning</div>
 <p class="lead">With love in our hearts and joy in our families,<br>please join us as we celebrate our engagement.</p>
 <h1>Shahrukh<br><span class="amp">&amp;</span><br>Tushi</h1>
@@ -170,7 +281,7 @@ section{scroll-margin-top:0}
 <div class="luxe-rule"></div>
 <div class="place">WEDNESDAY · 6:00 PM · DHAKA, BANGLADESH</div>
 <div class="place">ENGAGEMENT CELEBRATION</div>
-<div class="actions"><button class="btn" id="open">Open Invitation ↓</button><button class="btn alt" id="calendar">Add to Calendar</button></div>
+<div class="open-invitation-guide" aria-hidden="true"><span class="guide-arrow">↓</span><span class="guide-bn">আমন্ত্রণপত্র দেখতে নিচের বাটনে চাপ দিন</span></div><div class="actions"><button class="btn" id="open">Open Invitation <span class="open-arrow" aria-hidden="true">↓</span></button><button class="btn alt" id="calendar">Add to Calendar</button></div>
 <p class="hint">Two hearts, one promise, a lovely new chapter.</p>
 </main></header>
 <section id="invitation"><div class="inner"><div class="kicker">Together with our families</div><h2>You're invited</h2><p class="copy">We are delighted to share a special milestone with the people who mean so much to us. Please join us for a joyful engagement celebration as we begin this exciting chapter together.</p>
